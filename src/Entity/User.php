@@ -67,12 +67,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: ClubMember::class, mappedBy: 'user_id')]
     private Collection $clubMembers;
 
+<<<<<<< Updated upstream
     /**
  * @var Collection<int, Candidature>
  */
 #[ORM\OneToMany(mappedBy: 'user', targetEntity: Candidature::class, orphanRemoval: true)]
 private Collection $candidatures;
 
+=======
+   /**
+ * @var Collection<int, Candidature>
+ */
+#[ORM\OneToMany(mappedBy: 'user', targetEntity: Candidature::class)]
+private Collection $candidatures;
+>>>>>>> Stashed changes
     /**
      * @var Collection<int, Participation>
      */
@@ -251,7 +259,11 @@ private Collection $candidatures;
         return $this;
     }
 
+<<<<<<< Updated upstream
 /**
+=======
+    /**
+>>>>>>> Stashed changes
  * @return Collection<int, Candidature>
  */
 public function getCandidatures(): Collection
@@ -276,10 +288,15 @@ public function removeCandidature(Candidature $candidature): static
             $candidature->setUser(null);
         }
     }
+<<<<<<< Updated upstream
 
     return $this;
 }
+=======
+>>>>>>> Stashed changes
 
+    return $this;
+}
     /**
      * @return Collection<int, Participation>
      */
