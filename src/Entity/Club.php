@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ClubRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ClubRepository::class)]
@@ -24,6 +26,17 @@ class Club
 
     #[ORM\ManyToOne(inversedBy: 'clubs')]
     private ?user $proposed_by_id = null;
+
+    /**
+     * @var Collection<int, ClubMember>
+     */
+    #[ORM\OneToMany(targetEntity: ClubMember::class, mappedBy: 'club_id')]
+    private Collection $clubMembers;
+
+    public function __construct()
+    {
+        $this->clubMembers = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -74,6 +87,36 @@ class Club
     public function setProposedById(?user $proposed_by_id): static
     {
         $this->proposed_by_id = $proposed_by_id;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ClubMember>
+     */
+    public function getClubMembers(): Collection
+    {
+        return $this->clubMembers;
+    }
+
+    public function addClubMember(ClubMember $clubMember): static
+    {
+        if (!$this->clubMembers->contains($clubMember)) {
+            $this->clubMembers->add($clubMember);
+            $clubMember->setClubId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClubMember(ClubMember $clubMember): static
+    {
+        if ($this->clubMembers->removeElement($clubMember)) {
+            // set the owning side to null (unless already changed)
+            if ($clubMember->getClubId() === $this) {
+                $clubMember->setClubId(null);
+            }
+        }
 
         return $this;
     }
