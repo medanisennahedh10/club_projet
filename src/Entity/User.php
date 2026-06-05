@@ -67,11 +67,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: ClubMember::class, mappedBy: 'user_id')]
     private Collection $clubMembers;
 
+    /**
+     * @var Collection<int, Candidature>
+     */
+    #[ORM\ManyToMany(targetEntity: Candidature::class, mappedBy: 'user_id')]
+    private Collection $candidatures;
+
+    /**
+     * @var Collection<int, Participation>
+     */
+    #[ORM\OneToMany(targetEntity: Participation::class, mappedBy: 'user_id', orphanRemoval: true)]
+    private Collection $participations;
+
+    /**
+     * @var Collection<int, Feedback>
+     */
+    #[ORM\OneToMany(targetEntity: Feedback::class, mappedBy: 'user_id', orphanRemoval: true)]
+    private Collection $feedback;
+
     public function __construct()
     {
         $this->clubs = new ArrayCollection();
         $this->reclamations = new ArrayCollection();
         $this->clubMembers = new ArrayCollection();
+        $this->candidatures = new ArrayCollection();
+        $this->participations = new ArrayCollection();
+        $this->feedback = new ArrayCollection();
     }
 
     // --- UserInterface ---
@@ -224,6 +245,93 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($clubMember->getUserId() === $this) {
                 $clubMember->setUserId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Candidature>
+     */
+    public function getCandidatures(): Collection
+    {
+        return $this->candidatures;
+    }
+
+    public function addCandidature(Candidature $candidature): static
+    {
+        if (!$this->candidatures->contains($candidature)) {
+            $this->candidatures->add($candidature);
+            $candidature->addUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCandidature(Candidature $candidature): static
+    {
+        if ($this->candidatures->removeElement($candidature)) {
+            $candidature->removeUserId($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Participation>
+     */
+    public function getParticipations(): Collection
+    {
+        return $this->participations;
+    }
+
+    public function addParticipation(Participation $participation): static
+    {
+        if (!$this->participations->contains($participation)) {
+            $this->participations->add($participation);
+            $participation->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipation(Participation $participation): static
+    {
+        if ($this->participations->removeElement($participation)) {
+            // set the owning side to null (unless already changed)
+            if ($participation->getUserId() === $this) {
+                $participation->setUserId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Feedback>
+     */
+    public function getFeedback(): Collection
+    {
+        return $this->feedback;
+    }
+
+    public function addFeedback(Feedback $feedback): static
+    {
+        if (!$this->feedback->contains($feedback)) {
+            $this->feedback->add($feedback);
+            $feedback->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFeedback(Feedback $feedback): static
+    {
+        if ($this->feedback->removeElement($feedback)) {
+            // set the owning side to null (unless already changed)
+            if ($feedback->getUserId() === $this) {
+                $feedback->setUserId(null);
             }
         }
 
