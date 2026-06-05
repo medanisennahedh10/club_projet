@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\CandidatureRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CandidatureRepository::class)]
@@ -18,11 +16,9 @@ class Candidature
     #[ORM\Column(length: 255)]
     private ?string $status = null;
 
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'candidatures')]
-    private Collection $user_id;
+    #[ORM\ManyToOne(inversedBy: 'candidatures')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'candidatures')]
     #[ORM\JoinColumn(nullable: false)]
@@ -36,11 +32,6 @@ class Candidature
 
     #[ORM\Column]
     private ?\DateTimeImmutable $submitted_at = null;
-
-    public function __construct()
-    {
-        $this->user_id = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -59,26 +50,14 @@ class Candidature
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUserId(): Collection
+    public function getUser(): ?User
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function addUserId(User $userId): static
+    public function setUser(?User $user): static
     {
-        if (!$this->user_id->contains($userId)) {
-            $this->user_id->add($userId);
-        }
-
-        return $this;
-    }
-
-    public function removeUserId(User $userId): static
-    {
-        $this->user_id->removeElement($userId);
+        $this->user = $user;
 
         return $this;
     }

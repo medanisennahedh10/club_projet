@@ -68,10 +68,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $clubMembers;
 
     /**
-     * @var Collection<int, Candidature>
-     */
-    #[ORM\ManyToMany(targetEntity: Candidature::class, mappedBy: 'user_id')]
-    private Collection $candidatures;
+ * @var Collection<int, Candidature>
+ */
+#[ORM\OneToMany(mappedBy: 'user', targetEntity: Candidature::class, orphanRemoval: true)]
+private Collection $candidatures;
 
     /**
      * @var Collection<int, Participation>
@@ -251,32 +251,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Candidature>
-     */
-    public function getCandidatures(): Collection
-    {
-        return $this->candidatures;
+/**
+ * @return Collection<int, Candidature>
+ */
+public function getCandidatures(): Collection
+{
+    return $this->candidatures;
+}
+
+public function addCandidature(Candidature $candidature): static
+{
+    if (!$this->candidatures->contains($candidature)) {
+        $this->candidatures->add($candidature);
+        $candidature->setUser($this);
     }
 
-    public function addCandidature(Candidature $candidature): static
-    {
-        if (!$this->candidatures->contains($candidature)) {
-            $this->candidatures->add($candidature);
-            $candidature->addUserId($this);
+    return $this;
+}
+
+public function removeCandidature(Candidature $candidature): static
+{
+    if ($this->candidatures->removeElement($candidature)) {
+        if ($candidature->getUser() === $this) {
+            $candidature->setUser(null);
         }
-
-        return $this;
     }
 
-    public function removeCandidature(Candidature $candidature): static
-    {
-        if ($this->candidatures->removeElement($candidature)) {
-            $candidature->removeUserId($this);
-        }
-
-        return $this;
-    }
+    return $this;
+}
 
     /**
      * @return Collection<int, Participation>
