@@ -1,0 +1,237 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ISET Clubs - Accueil{% endblock %}
+
+{% block body %}
+<main class="flex-grow">
+
+    <section class="relative h-[85vh] flex items-center justify-center overflow-hidden">
+        <img src="{{ asset('image/accueil.jpg') }}" alt="ISET Campus" class="absolute inset-0 w-full h-full object-cover">
+        
+        <div class="absolute inset-0 bg-gradient-to-b from-blue-950/80 to-blue-900/70 backdrop-blur-xs"></div>
+        
+        <div class="relative z-10 max-w-4xl mx-auto text-center px-4">
+            <span class="inline-flex items-center gap-1.5 py-1.5 px-3.5 rounded-full text-xs font-bold bg-amber-400 text-blue-950 uppercase tracking-wider mb-6 shadow-md">
+                Votre avenir commence ici
+            </span>
+            
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight mb-6">
+                Propulsez vos compétences avec <br>
+                <span class="text-amber-400">les Clubs de l'ISET Zaghouan</span>
+            </h1>
+            
+            <p class="text-lg sm:text-xl text-gray-200 max-w-2xl mx-auto mb-10 leading-relaxed font-medium">
+                Rejoignez une communauté dynamique, développez votre leadership et transformez vos idées théoriques en projets réels et innovants !
+            </p>
+            
+           
+        </div>
+    </section>
+
+    <section class="py-10 bg-white border-b border-gray-100">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                
+                <div class="p-4 text-center border border-gray-100 rounded-xl bg-gray-50/50">
+                    <p class="text-3xl font-extrabold text-blue-600">10+</p>
+                    <p class="text-xs font-semibold text-gray-500 uppercase mt-1">Clubs Actifs</p>
+                </div>
+                
+                <div class="p-4 text-center border border-gray-100 rounded-xl bg-gray-50/50">
+                    <p class="text-3xl font-extrabold text-amber-500">25+</p>
+                    <p class="text-xs font-semibold text-gray-500 uppercase mt-1">Événements / An</p>
+                </div>
+                
+                <div class="p-4 text-center border border-gray-100 rounded-xl bg-gray-50/50">
+                    <p class="text-3xl font-extrabold text-blue-600">500+</p>
+                    <p class="text-xs font-semibold text-gray-500 uppercase mt-1">Membres Inscrits</p>
+                </div>
+                
+                <div class="p-4 text-center border border-gray-100 rounded-xl bg-gray-50/50">
+                    <p class="text-3xl font-extrabold text-amber-500">15+</p>
+                    <p class="text-xs font-semibold text-gray-500 uppercase mt-1">Recrutements</p>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+<!-- SECTION: GALERIE DES ÉVÉNEMENTS DES CLUBS -->
+<section class="py-16 bg-white border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-3xl font-extrabold text-blue-950 tracking-tight">
+                    Moments Forts de nos Clubs
+                </h2>
+                <p class="text-sm text-gray-500 mt-2 leading-relaxed">
+                    Retour en images sur les ateliers, compétitions et moments inoubliables partagés par les étudiants de l'ISET Zaghouan.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <div class="relative rounded-2xl overflow-hidden shadow-sm border border-gray-100 h-64 bg-gray-50">
+                    <img src="{{ asset('image/c1.jpg') }}" alt="Workshop Arduino" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-blue-950/95 via-blue-950/50 to-transparent flex flex-col justify-end p-6">
+                        <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">SecuriNets </span>
+                        <h3 class="text-base font-bold text-white mt-1">Workshop Arduino & IoT</h3>
+                        <p class="text-xs text-gray-200 mt-1">Session pratique de montage et programmation.</p>
+                    </div>
+                </div>
+
+                <div class="relative rounded-2xl overflow-hidden shadow-sm border border-gray-100 h-64 bg-gray-50">
+                    <img src="{{ asset('image/c2.jpg') }}" alt="Hackathon Cyber Security" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-blue-950/95 via-blue-950/50 to-transparent flex flex-col justify-end p-6">
+                        <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">SecuriNets</span>
+                        <h3 class="text-base font-bold text-white mt-1">Hackathon: Capture The Flag</h3>
+                        <p class="text-xs text-gray-200 mt-1">24 heures de défis intensifs en sécurité informatique.</p>
+                    </div>
+                </div>
+
+                <div class="relative rounded-2xl overflow-hidden shadow-sm border border-gray-100 h-64 bg-gray-50">
+                    <img src="{{ asset('image/c3.jpg') }}" alt="Session TIM" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-blue-950/95 via-blue-950/50 to-transparent flex flex-col justify-end p-6">
+                        <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">IEEE</span>
+                        <h3 class="text-base font-bold text-white mt-1">Journée d'Intégration & Recrutement</h3>
+                        <p class="text-xs text-gray-200 mt-1">Accueil des nouveaux étudiants et présentation des comités.</p>
+                    </div>
+                </div>
+
+                <div class="relative rounded-2xl overflow-hidden shadow-sm border border-gray-100 h-64 bg-gray-50 hidden sm:block">
+                    <img src="{{ asset('image/c4.jpg') }}" alt="Formation Soft Skills" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-blue-950/95 via-blue-950/50 to-transparent flex flex-col justify-end p-6">
+                        <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">IEEE</span>
+                        <h3 class="text-base font-bold text-white mt-1">Session Team Building</h3>
+                        <p class="text-xs text-gray-200 mt-1">Développement des compétences de communication et de leadership.</p>
+                    </div>
+                </div>
+
+                <div class="relative rounded-2xl overflow-hidden shadow-sm border border-gray-100 h-64 bg-gray-50 hidden lg:block">
+                    <img src="{{ asset('image/c5.jpg') }}" alt="Evénement Culturel" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-blue-950/95 via-blue-950/50 to-transparent flex flex-col justify-end p-6">
+                        <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">enactus</span>
+                        <h3 class="text-base font-bold text-white mt-1">Exposition & Design Graphique</h3>
+                        <p class="text-xs text-gray-200 mt-1">Galerie des créations numériques réalisées par nos étudiants.</p>
+                    </div>
+                </div>
+
+                <div class="relative rounded-2xl overflow-hidden shadow-sm border border-gray-100 h-64 bg-gray-50 hidden lg:block">
+                    <img src="{{ asset('image/c6.jpg') }}" alt="Visite Entreprise" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-blue-950/95 via-blue-950/50 to-transparent flex flex-col justify-end p-6">
+                        <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">enactus</span>
+                        <h3 class="text-base font-bold text-white mt-1">Visites d'Entreprises & Stages</h3>
+                        <p class="text-xs text-gray-200 mt-1">Rapprocher les étudiants du monde professionnel tunisien.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+            </div>
+        </div>
+    </section>
+    <section class="py-16 bg-gray-50 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 mb-8 text-center md:text-left md:flex md:justify-between md:items-end">
+            <div>
+                <h2 class="text-2xl font-bold text-blue-950">Nos Clubs Partenaires</h2>
+                <p class="text-sm text-gray-500 mt-1">Défilement des clubs actifs à l'ISET</p>
+            </div>
+        </div>
+
+        <div class="relative w-full flex overflow-x-hidden border-y border-gray-200 bg-white py-6">
+            <div class="animate-marquee flex gap-16 min-w-full justify-around shrink-0 items-center">
+                <img src="{{ asset('image/i1.webp') }}" alt="Club Robotique" class="h-16 w-auto object-contain filter grayscale hover:grayscale-0 transition-all duration-300">
+                <img src="{{ asset('image/i2.png') }}" alt="Club Security" class="h-16 w-auto object-contain filter grayscale hover:grayscale-0 transition-all duration-300">
+                <img src="{{ asset('image/i3.png') }}" alt="Club TIM" class="h-16 w-auto object-contain filter grayscale hover:grayscale-0 transition-all duration-300">
+                <img src="{{ asset('image/i4.webp') }}" alt="Club Design" class="h-16 w-auto object-contain filter grayscale hover:grayscale-0 transition-all duration-300">
+                <img src="{{ asset('image/logo.png') }}" alt="Club Green Tech" class="h-16 w-auto object-contain filter grayscale hover:grayscale-0 transition-all duration-300">
+            </div>
+            <div aria-hidden="true" class="animate-marquee flex gap-16 min-w-full justify-around shrink-0 items-center">
+<img src="{{ asset('image/i1.webp') }}" alt="Club Robotique" class="h-16 w-auto object-contain filter grayscale hover:grayscale-0 transition-all duration-300">
+                <img src="{{ asset('image/i2.png') }}" alt="Club Security" class="h-16 w-auto object-contain filter grayscale hover:grayscale-0 transition-all duration-300">
+                <img src="{{ asset('image/i3.png') }}" alt="Club TIM" class="h-16 w-auto object-contain filter grayscale hover:grayscale-0 transition-all duration-300">
+                <img src="{{ asset('image/i4.webp') }}" alt="Club Design" class="h-16 w-auto object-contain filter grayscale hover:grayscale-0 transition-all duration-300">
+                <img src="{{ asset('image/logo.png') }}" alt="Club Green Tech" class="h-16 w-auto object-contain filter grayscale hover:grayscale-0 transition-all duration-300">
+            </div>
+        </div>
+    </section>
+
+   <!-- 4. FOOTER GREY DEVELOPPÉ -->
+    <footer class="bg-gray-900 text-gray-300 pt-12 pb-6 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- الجزء العلوي: المعلومات الأساسية -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-gray-800">
+                
+                <!-- العمود 1: الشعار والوصف -->
+                <div class="flex flex-col gap-3">
+                    <div class="flex items-center gap-3">
+                        <!-- فلتر ذكي لتحويل الشعار الأصلي إلى اللون الأبيض بالكامل ليناسب الخلفية الغامقة -->
+                        <img src="{{ asset('image/logo.png') }}" alt="Logo ISET" class="h-12 w-auto object-contain ">
+                        <div class="flex flex-col">
+                            <span class="text-lg font-bold tracking-tight text-white leading-none">ISET<span class="text-amber-400">Clubs</span></span>
+                            <span class="text-[10px] text-gray-400 font-medium mt-0.5">Zaghouan</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-2 leading-relaxed max-w-sm">
+                        Plateforme officielle dédiée à la gestion et à la dynamisation de la vie estudiantine et associative au sein de l'Institut Supérieur des Études Technologiques de Zaghouan.
+                    </p>
+                </div>
+
+                <!-- العمود 2: روابط سريعة للموقع -->
+                <div class="flex flex-col gap-3">
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wider">Liens Utiles</h3>
+                    <ul class="text-xs space-y-2.5">
+                        <li><a href="#" class="hover:text-amber-400 transition-colors">Accueil</a></li>
+                        <li><a href="#" class="hover:text-amber-400 transition-colors">Liste des Clubs</a></li>
+                        <li><a href="#" class="hover:text-amber-400 transition-colors">Événements Récents</a></li>
+                        <li><a href="#" class="hover:text-amber-400 transition-colors">Opportunités de Recrutement</a></li>
+                    </ul>
+                </div>
+
+                <!-- العمود 3: معلومات الاتصال (الهاتف، الإيميل، العنوان) -->
+                <div class="flex flex-col gap-3">
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wider">Contact & Accès</h3>
+                    <ul class="text-xs space-y-3 text-gray-400">
+                        <!-- العنوان -->
+                        <li class="flex items-start gap-2">
+                            <svg class="w-4 h-4 text-amber-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
+                            <span>C3MV+R33، Mogran, Moghrane</span>
+                        </li>
+                        <!-- الهاتف -->
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-amber-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                            <span>+216 71 660 400</span>
+                        </li>
+                        <!-- البريد الإلكتروني -->
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-amber-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                            <span>http://www.isetzg.rnu.tn/</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- الجزء السفلي: الحقوق ومعلومات المشروع -->
+            <div class="pt-6 text-center sm:flex sm:justify-between sm:items-center text-xs text-gray-500">
+                <p>&copy; 2026 <span class="text-amber-400 font-medium">ISET Zaghouan</span>. Tous droits réservés.</p>
+                <p class="mt-2 sm:mt-0">Projet Symfony - 2ème année DSI</p>
+            </div>
+            
+        </div>
+    </footer>
+
+</main>
+
+<style>
+    @keyframes marquee {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(0%); }
+    }
+    .animate-marquee {
+        animation: marquee 25s linear infinite;
+    }
+</style>
+{% endblock %}
