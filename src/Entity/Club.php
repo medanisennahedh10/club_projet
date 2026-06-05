@@ -25,12 +25,12 @@ class Club
     private ?string $logo = null;
 
     #[ORM\ManyToOne(inversedBy: 'clubs')]
-    private ?user $proposed_by_id = null;
+    private ?User $proposed_by_id = null;
 
     /**
      * @var Collection<int, ClubMember>
      */
-    #[ORM\OneToMany(targetEntity: ClubMember::class, mappedBy: 'club_id')]
+    #[ORM\OneToMany(targetEntity: ClubMember::class, mappedBy: 'club')]
     private Collection $clubMembers;
 
     public function __construct()
@@ -38,11 +38,13 @@ class Club
         $this->clubMembers = new ArrayCollection();
     }
 
+    // ================= ID =================
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    // ================= NAME =================
     public function getName(): ?string
     {
         return $this->name;
@@ -51,10 +53,10 @@ class Club
     public function setName(string $name): static
     {
         $this->name = $name;
-
         return $this;
     }
 
+    // ================= DESCRIPTION =================
     public function getDescription(): ?string
     {
         return $this->description;
@@ -63,10 +65,10 @@ class Club
     public function setDescription(string $description): static
     {
         $this->description = $description;
-
         return $this;
     }
 
+    // ================= LOGO =================
     public function getLogo(): ?string
     {
         return $this->logo;
@@ -75,22 +77,22 @@ class Club
     public function setLogo(string $logo): static
     {
         $this->logo = $logo;
-
         return $this;
     }
 
-    public function getProposedById(): ?user
+    // ================= PROPOSED BY =================
+    public function getProposedById(): ?User
     {
         return $this->proposed_by_id;
     }
 
-    public function setProposedById(?user $proposed_by_id): static
+    public function setProposedById(?User $proposed_by_id): static
     {
         $this->proposed_by_id = $proposed_by_id;
-
         return $this;
     }
 
+    // ================= CLUB MEMBERS =================
     /**
      * @return Collection<int, ClubMember>
      */
@@ -103,7 +105,7 @@ class Club
     {
         if (!$this->clubMembers->contains($clubMember)) {
             $this->clubMembers->add($clubMember);
-            $clubMember->setClubId($this);
+            $clubMember->setClub($this);
         }
 
         return $this;
@@ -112,9 +114,8 @@ class Club
     public function removeClubMember(ClubMember $clubMember): static
     {
         if ($this->clubMembers->removeElement($clubMember)) {
-            // set the owning side to null (unless already changed)
-            if ($clubMember->getClubId() === $this) {
-                $clubMember->setClubId(null);
+            if ($clubMember->getClub() === $this) {
+                $clubMember->setClub(null);
             }
         }
 
