@@ -21,7 +21,7 @@ class Club
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255 ,nullable: true)]
     private ?string $logo = null;
 
     #[ORM\ManyToOne(inversedBy: 'clubs')]
@@ -30,7 +30,7 @@ class Club
     /**
      * @var Collection<int, ClubMember>
      */
-    #[ORM\OneToMany(targetEntity: ClubMember::class, mappedBy: 'club')]
+    #[ORM\OneToMany(targetEntity: ClubMember::class, mappedBy: 'club_id')]
     private Collection $clubMembers;
 
     public function __construct()

@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvel Utilisateur{% endblock %}
+
+{% block body %}
+<div class="max-w-2xl mx-auto px-4 py-10">
+    <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+
+        <div class="mb-6">
+            <h1 class="text-2xl font-bold text-gray-900">Créer un Utilisateur</h1>
+            <p class="text-sm text-gray-500 mt-1">Remplissez les informations du nouvel utilisateur.</p>
+        </div>
+
+        {{ form_start(form, {'attr': {'enctype': 'multipart/form-data', 'novalidate': 'novalidate'}}) }}
+        <div class="space-y-5">
+
+            {# Prénom + Nom #}
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    {{ form_label(form.firstname, 'Prénom', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                    {{ form_widget(form.firstname, {'attr': {'class': 'w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300'}}) }}
+                    {{ form_errors(form.firstname) }}
+                </div>
+                <div>
+                    {{ form_label(form.lastname, 'Nom', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                    {{ form_widget(form.lastname, {'attr': {'class': 'w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300'}}) }}
+                    {{ form_errors(form.lastname) }}
+                </div>
+            </div>
+
+            {# Email #}
+            <div>
+                {{ form_label(form.email, 'Adresse email', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                {{ form_widget(form.email, {'attr': {'class': 'w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300'}}) }}
+                {{ form_errors(form.email) }}
+            </div>
+
+            {# Mot de passe #}
+            <div>
+                {{ form_label(form.plainPassword, 'Mot de passe', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                {{ form_widget(form.plainPassword, {'attr': {'class': 'w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300'}}) }}
+                {{ form_errors(form.plainPassword) }}
+            </div>
+
+            {# Rôle + Type #}
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    {{ form_label(form.role, 'Rôle', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                    {{ form_widget(form.role, {'attr': {'class': 'w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300'}}) }}
+                    {{ form_errors(form.role) }}
+                </div>
+                <div>
+                    {{ form_label(form.dtype, 'Type', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                    {{ form_widget(form.dtype, {'attr': {'class': 'w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300'}}) }}
+                    {{ form_errors(form.dtype) }}
+                </div>
+            </div>
+
+            {# Photo de profil #}
+            <div>
+                {{ form_label(form.profile_picture_file, 'Photo de profil', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                {{ form_widget(form.profile_picture_file, {'attr': {'class': 'w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100'}}) }}
+                <p class="text-xs text-gray-400 mt-1">Formats acceptés : JPG, PNG, WEBP. Max 2 Mo.</p>
+                {{ form_errors(form.profile_picture_file) }}
+            </div>
+
+            {# Vérifié #}
+            <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl border border-gray-100">
+                {{ form_widget(form.is_verified, {'attr': {'class': 'w-4 h-4 text-indigo-600 rounded'}}) }}
+                {{ form_label(form.is_verified, 'Compte vérifié', {'label_attr': {'class': 'text-sm text-gray-700 cursor-pointer'}}) }}
+            </div>
+
+            {# Boutons #}
+            <div class="flex gap-3 pt-4 border-t border-gray-100">
+                <button type="submit"
+                        class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-indigo-700 text-sm shadow-sm transition-all">
+                    Enregistrer
+                </button>
+                <a href="{{ path('app_user_index') }}"
+                   class="bg-gray-100 text-gray-700 px-5 py-2.5 rounded-xl font-semibold hover:bg-gray-200 text-sm transition-all">
+                    Annuler
+                </a>
+            </div>
+
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}
