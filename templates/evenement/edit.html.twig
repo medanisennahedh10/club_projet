@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier l'Événement{% endblock %}
+
+{% block body %}
+<div class="max-w-2xl mx-auto px-4 py-10">
+    <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+
+        <div class="mb-6">
+            <h1 class="text-2xl font-bold text-gray-900">Modifier : {{ evenement.nomEvenement }}</h1>
+            <p class="text-sm text-gray-500 mt-1">Modifiez les informations de cet événement.</p>
+        </div>
+
+        {{ form_start(form, {'attr': {'enctype': 'multipart/form-data', 'novalidate': 'novalidate'}}) }}
+        <div class="space-y-5">
+
+            {# Nom de l'événement #}
+            <div>
+                {{ form_label(form.nom_evenement, 'Nom de l\'événement', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                {{ form_widget(form.nom_evenement, {'attr': {'class': 'w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300'}}) }}
+            </div>
+
+            {# Lieu et Dates #}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    {{ form_label(form.lieu, 'Lieu', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                    {{ form_widget(form.lieu, {'attr': {'class': 'w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300'}}) }}
+                </div>
+                <div>
+                    {{ form_label(form.date_debut, 'Date de début', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                    {{ form_widget(form.date_debut, {'attr': {'class': 'w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300'}}) }}
+                </div>
+            </div>
+
+            {# Image actuelle #}
+            {% if evenement.image %}
+                <div class="flex items-center gap-4 p-3 bg-gray-50 rounded-xl border border-gray-100">
+                    <img src="{{ asset('uploads/events/' ~ evenement.image) }}" 
+                         alt="Image actuelle" 
+                         class="w-14 h-14 rounded-xl object-cover border-2 border-white shadow-sm">
+                    <div>
+                        <p class="text-sm font-medium text-gray-700">Image actuelle</p>
+                        <p class="text-xs text-gray-400">Choisir un nouveau fichier pour la remplacer.</p>
+                    </div>
+                </div>
+            {% endif %}
+
+            {# Upload Image #}
+            <div>
+                {{ form_label(form.image, 'Modifier l\'image', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                {{ form_widget(form.image, {'attr': {'class': 'w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100'}}) }}
+            </div>
+
+            {# Club et Status #}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    {{ form_label(form.status, 'Statut', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                    {{ form_widget(form.status, {'attr': {'class': 'w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300'}}) }}
+                </div>
+                <div>
+                    {{ form_label(form.club_id, 'Club associé', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                    {{ form_widget(form.club_id, {'attr': {'class': 'w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300'}}) }}
+                </div>
+            </div>
+
+            {# Boutons #}
+            <div class="flex gap-3 pt-4 border-t border-gray-100">
+                <button type="submit"
+                        class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-indigo-700 text-sm shadow-sm transition-all">
+                    Enregistrer les modifications
+                </button>
+                <a href="{{ path('app_evenement_index') }}"
+                   class="bg-gray-100 text-gray-700 px-5 py-2.5 rounded-xl font-semibold hover:bg-gray-200 text-sm transition-all">
+                    Annuler
+                </a>
+            </div>
+
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}
