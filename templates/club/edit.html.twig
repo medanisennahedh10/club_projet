@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le Club{% endblock %}
+
+{% block body %}
+<div class="max-w-2xl mx-auto px-4 py-10">
+    <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+
+        <div class="mb-6">
+            <h1 class="text-2xl font-bold text-gray-900">Modifier le Club</h1>
+            <p class="text-sm text-gray-500 mt-1">Modifiez les informations du club.</p>
+        </div>
+
+        {{ form_start(form, {'attr': {'enctype': 'multipart/form-data', 'novalidate': 'novalidate'}}) }}
+        <div class="space-y-5">
+
+            {# Nom #}
+            <div>
+                {{ form_label(form.name, 'Nom du club', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                {{ form_widget(form.name, {'attr': {'class': 'w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300'}}) }}
+                {{ form_errors(form.name) }}
+            </div>
+
+            {# Description #}
+            <div>
+                {{ form_label(form.description, 'Description', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                {{ form_widget(form.description, {'attr': {'class': 'w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 resize-none'}}) }}
+                {{ form_errors(form.description) }}
+            </div>
+
+            {# Logo actuel #}
+            {% if club.logo %}
+                <div class="flex items-center gap-4 p-3 bg-gray-50 rounded-xl border border-gray-100">
+                    <img src="{{ asset('uploads/logos/' ~ club.logo) }}"
+                         alt="Logo actuel"
+                         class="w-14 h-14 rounded-xl object-cover border-2 border-white shadow-sm">
+                    <div>
+                        <p class="text-sm font-medium text-gray-700">Logo actuel</p>
+                        <p class="text-xs text-gray-400">Choisir un nouveau fichier pour le remplacer.</p>
+                    </div>
+                </div>
+            {% endif %}
+
+            {# Nouveau logo #}
+            <div>
+                {{ form_label(form.logo_file, 'Nouveau logo', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                {{ form_widget(form.logo_file, {'attr': {'class': 'w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100'}}) }}
+                <p class="text-xs text-gray-400 mt-1">Laisser vide pour conserver le logo actuel.</p>
+                {{ form_errors(form.logo_file) }}
+            </div>
+
+            {# Proposé par #}
+            <div>
+                {{ form_label(form.proposed_by_id, 'Proposé par', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                {{ form_widget(form.proposed_by_id, {'attr': {'class': 'w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300'}}) }}
+                {{ form_errors(form.proposed_by_id) }}
+            </div>
+
+            {# Boutons #}
+            <div class="flex gap-3 pt-4 border-t border-gray-100">
+                <button type="submit"
+                        class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-indigo-700 text-sm shadow-sm transition-all">
+                    Modifier
+                </button>
+                <a href="{{ path('app_club_index') }}"
+                   class="bg-gray-100 text-gray-700 px-5 py-2.5 rounded-xl font-semibold hover:bg-gray-200 text-sm transition-all">
+                    Annuler
+                </a>
+            </div>
+
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}
