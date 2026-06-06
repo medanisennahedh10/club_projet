@@ -5,26 +5,25 @@
 {% block body %}
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-    {# Header #}
     <div class="flex justify-between items-end mb-8">
         <div>
             <h1 class="text-2xl font-bold text-gray-900">Clubs</h1>
             <p class="text-sm text-gray-500 mt-1">Liste de tous les clubs enregistrés.</p>
         </div>
-        <a href="{{ path('app_club_new') }}"
-           class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-5 py-2.5 rounded-xl shadow-sm transition-all">
-            + Nouveau Club
-        </a>
+        {% if app.user.role.value == 'ROLE_ADMIN' or app.user.role.value == 'ROLE_PRESIDENT' %}
+            <a href="{{ path('app_club_new') }}"
+               class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-5 py-2.5 rounded-xl shadow-sm transition-all">
+                + Nouveau Club
+            </a>
+        {% endif %}
     </div>
 
-    {# Flash Messages #}
     {% for message in app.flashes('success') %}
         <div class="mb-6 p-4 text-sm text-green-700 bg-green-50 border border-green-200 rounded-xl">
             {{ message }}
         </div>
     {% endfor %}
 
-    {# Table #}
     <div class="bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden">
         <div class="overflow-x-auto">
             <table class="w-full text-left text-sm">
@@ -42,26 +41,22 @@
                 {% for club in clubs %}
                     <tr class="hover:bg-gray-50/50 transition-colors">
 
-                        {# Logo #}
                         <td class="p-4">
                             {% if club.logo != null %}
                                 <img src="{{ asset('logos/' ~ club.logo) }}"
                                      alt="Logo"
                                      class="w-10 h-10 rounded-xl object-cover border border-gray-200">
                             {% else %}
-                                <img src="{{ asset('logos/logopd.jpg') }}" 
-     alt="Logo" 
-     class="w-10 h-10 rounded-xl object-cover border border-gray-200">
+                                <img src="{{ asset('logos/logopd.jpg') }}"
+                                     alt="Logo"
+                                     class="w-10 h-10 rounded-xl object-cover border border-gray-200">
                             {% endif %}
                         </td>
 
-                        {# Nom #}
                         <td class="p-4 font-semibold text-gray-900">{{ club.name }}</td>
 
-                        {# Description #}
                         <td class="p-4 text-gray-500 max-w-xs truncate">{{ club.description }}</td>
 
-                        {# Proposé par #}
                         <td class="p-4 text-gray-500">
                             {% if club.proposedById %}
                                 {{ club.proposedById.firstname }} {{ club.proposedById.lastname }}
@@ -70,27 +65,64 @@
                             {% endif %}
                         </td>
 
-                        {# Nb membres #}
                         <td class="p-4">
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-50 text-indigo-700 border border-indigo-100">
                                 {{ club.clubMembers.count() }} membre(s)
                             </span>
                         </td>
 
-                        {# Actions #}
                         <td class="p-4 text-center">
                             <div class="flex items-center justify-center gap-3">
-                                <a href="{{ path('app_club_edit', {'id': club.id}) }}"
-                                   class="text-indigo-600 hover:text-indigo-900 font-medium text-xs">
-                                    Modifier
-                                </a>
-                                <form method="post" action="{{ path('app_club_delete', {'id': club.id}) }}"
-                                      onsubmit="return confirm('Supprimer ce club ?');">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ club.id) }}">
-                                    <button class="text-red-600 hover:text-red-900 font-medium text-xs">
-                                        Supprimer
-                                    </button>
-                                </form>
+
+                                {% set role = app.user.role.value %}
+
+                                {% if role == 'etudiant' %}
+                                    <a href="{{ path('app_club_show', {'id': club.id}) }}"
+                                       class="text-indigo-600 hover:text-indigo-900 font-medium text-xs">
+                                        Voir
+                                    </a>
+
+                                {% elseif role == 'ROLE_RESPONSABLE' %}
+                                    <a href="{{ path('app_club_show', {'id': club.id}) }}"
+                                       class="text-indigo-600 hover:text-indigo-900 font-medium text-xs">
+                                        Voir
+                                    </a>
+                                    <a href="{{ path('app_club_edit', {'id': club.id}) }}"
+                                       class="text-indigo-600 hover:text-indigo-900 font-medium text-xs">
+                                        Modifier
+                                    </a>
+
+                                {% elseif role == 'ROLE_PRESIDENT' %}
+                                    <a href="{{ path('app_club_show', {'id': club.id}) }}"
+                                       class="text-indigo-600 hover:text-indigo-900 font-medium text-xs">
+                                        Voir
+                                    </a>
+                                    <a href="{{ path('app_club_edit', {'id': club.id}) }}"
+                                       class="text-indigo-600 hover:text-indigo-900 font-medium text-xs">
+                                        Modifier
+                                    </a>
+                                    <form method="post" action="{{ path('app_club_delete', {'id': club.id}) }}"
+                                          onsubmit="return confirm('Supprimer ce club ?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ club.id) }}">
+                                        <button class="text-red-600 hover:text-red-900 font-medium text-xs">
+                                            Supprimer
+                                        </button>
+                                    </form>
+
+                                {% else %}
+                                    <a href="{{ path('app_club_edit', {'id': club.id}) }}"
+                                       class="text-indigo-600 hover:text-indigo-900 font-medium text-xs">
+                                        Modifier
+                                    </a>
+                                    <form method="post" action="{{ path('app_club_delete', {'id': club.id}) }}"
+                                          onsubmit="return confirm('Supprimer ce club ?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ club.id) }}">
+                                        <button class="text-red-600 hover:text-red-900 font-medium text-xs">
+                                            Supprimer
+                                        </button>
+                                    </form>
+                                {% endif %}
+
                             </div>
                         </td>
                     </tr>

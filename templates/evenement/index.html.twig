@@ -5,26 +5,26 @@
 {% block body %}
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-    {# Header #}
     <div class="flex justify-between items-end mb-8">
         <div>
             <h1 class="text-2xl font-bold text-gray-900">Événements</h1>
             <p class="text-sm text-gray-500 mt-1">Liste des événements programmés.</p>
         </div>
-        <a href="{{ path('app_evenement_new') }}"
-           class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-5 py-2.5 rounded-xl shadow-sm transition-all">
-            + Nouvel Événement
-        </a>
+        {% set role = app.user.role.value %}
+        {% if role == 'ROLE_ADMIN' or role == 'ROLE_PRESIDENT' or role == 'ROLE_RESPONSABLE' %}
+            <a href="{{ path('app_evenement_new') }}"
+               class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-5 py-2.5 rounded-xl shadow-sm transition-all">
+                + Nouvel Événement
+            </a>
+        {% endif %}
     </div>
 
-    {# Flash Messages #}
     {% for message in app.flashes('success') %}
         <div class="mb-6 p-4 text-sm text-green-700 bg-green-50 border border-green-200 rounded-xl">
             {{ message }}
         </div>
     {% endfor %}
 
-    {# Table #}
     <div class="bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden">
         <div class="overflow-x-auto">
             <table class="w-full text-left text-sm">
@@ -39,41 +39,87 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-50 text-gray-700">
+                {% set role = app.user.role.value %}
                 {% for event in evenements %}
                     <tr class="hover:bg-gray-50/50 transition-colors">
-                        {# Image #}
+
                         <td class="p-4">
-                            <img src="{{ event.image ? asset('uploads/events/' ~ event.image) : asset('logos/logopd.jpg') }}" 
-                                 alt="Event" 
+                            <img src="{{ event.image ? asset('uploads/events/' ~ event.image) : asset('logos/logopd.jpg') }}"
+                                 alt="Event"
                                  class="w-12 h-10 rounded-xl object-cover border border-gray-200">
                         </td>
-                        {# Nom #}
+
                         <td class="p-4 font-semibold text-gray-900">{{ event.nomEvenement }}</td>
-                        {# Date & Lieu #}
+
                         <td class="p-4 text-gray-500">
-                            {{ event.dateDebut|date('d/m/Y') }} <br>
+                            {{ event.dateDebut|date('d/m/Y') }}<br>
                             <span class="text-xs text-gray-400">{{ event.lieu }}</span>
                         </td>
-                        {# Statut #}
+
                         <td class="p-4">
-                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
                                 {% if event.status == 'En cours' %} bg-green-50 text-green-700 border border-green-100
                                 {% else %} bg-gray-50 text-gray-600 border border-gray-100 {% endif %}">
                                 {{ event.status }}
-                             </span>
+                            </span>
                         </td>
-                        {# Club #}
+
                         <td class="p-4 text-sm">{{ event.clubId ? event.clubId.name : '—' }}</td>
-                        
-                        {# Actions #}
+
                         <td class="p-4 text-center">
                             <div class="flex items-center justify-center gap-3">
-                                <a href="{{ path('app_evenement_edit', {'id': event.id}) }}" 
-                                   class="text-indigo-600 hover:text-indigo-900 font-medium text-xs">Modifier</a>
-                                <form method="post" action="{{ path('app_evenement_delete', {'id': event.id}) }}" onsubmit="return confirm('Supprimer cet événement ?');">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ event.id) }}">
-                                    <button class="text-red-600 hover:text-red-900 font-medium text-xs">Supprimer</button>
-                                </form>
+
+                                {# ETUDIANT - voir + participer #}
+                                {% if role == 'etudiant' %}
+                                    <a href="{{ path('app_evenement_show', {'id': event.id}) }}"
+                                       class="text-indigo-600 hover:text-indigo-900 font-medium text-xs">
+                                        Voir
+                                    </a>
+                                    <a href="{{ path('app_participation_new') }}"
+                                       class="text-green-600 hover:text-green-900 font-medium text-xs">
+                                        Participer
+                                    </a>
+
+                                {# RESPONSABLE - voir + modifier #}
+                                {% elseif role == 'ROLE_RESPONSABLE' %}
+                                    <a href="{{ path('app_evenement_show', {'id': event.id}) }}"
+                                       class="text-indigo-600 hover:text-indigo-900 font-medium text-xs">
+                                        Voir
+                                    </a>
+                                    <a href="{{ path('app_evenement_edit', {'id': event.id}) }}"
+                                       class="text-indigo-600 hover:text-indigo-900 font-medium text-xs">
+                                        Modifier
+                                    </a>
+
+                                {# PRESIDENT - voir + modifier + supprimer #}
+                                {% elseif role == 'ROLE_PRESIDENT' %}
+                                    <a href="{{ path('app_evenement_show', {'id': event.id}) }}"
+                                       class="text-indigo-600 hover:text-indigo-900 font-medium text-xs">
+                                        Voir
+                                    </a>
+                                    <a href="{{ path('app_evenement_edit', {'id': event.id}) }}"
+                                       class="text-indigo-600 hover:text-indigo-900 font-medium text-xs">
+                                        Modifier
+                                    </a>
+                                    <form method="post" action="{{ path('app_evenement_delete', {'id': event.id}) }}"
+                                          onsubmit="return confirm('Supprimer cet événement ?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ event.id) }}">
+                                        <button class="text-red-600 hover:text-red-900 font-medium text-xs">Supprimer</button>
+                                    </form>
+
+                                {# ADMIN - tout #}
+                                {% else %}
+                                    <a href="{{ path('app_evenement_edit', {'id': event.id}) }}"
+                                       class="text-indigo-600 hover:text-indigo-900 font-medium text-xs">
+                                        Modifier
+                                    </a>
+                                    <form method="post" action="{{ path('app_evenement_delete', {'id': event.id}) }}"
+                                          onsubmit="return confirm('Supprimer cet événement ?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ event.id) }}">
+                                        <button class="text-red-600 hover:text-red-900 font-medium text-xs">Supprimer</button>
+                                    </form>
+                                {% endif %}
+
                             </div>
                         </td>
                     </tr>
