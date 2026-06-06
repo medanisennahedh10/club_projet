@@ -19,4 +19,15 @@ class DashbordController extends AbstractController
             'user' => $user,
         ]);
     }
+
+    #[Route('/profile', name: 'app_profile')]
+    #[IsGranted('ROLE_USER')]
+    public function profile(): Response
+    {
+        $user = $this->getUser();
+
+        return $this->render('dashbord/profile.html.twig', [
+            'user' => $user,
+        ]);
+    }
 }
