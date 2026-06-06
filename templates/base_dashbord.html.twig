@@ -18,26 +18,13 @@
     <nav class="bg-white border-b border-gray-100 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
-                
+
                 <div class="flex items-center gap-3">
                     <img src="{{ asset('image/logo.png') }}" alt="Logo ISET" class="h-10 w-auto object-contain">
-                    
                     <div class="flex flex-col">
                         <span class="text-xl font-bold tracking-tight text-indigo-600 leading-none">ISET<span class="text-gray-900">Clubs</span></span>
                         <span class="text-[10px] text-gray-500 font-medium mt-0.5">Zaghouan</span>
                     </div>
-                </div>
-
-                <div class="hidden sm:flex items-center gap-8">
-                    <a href="#" class="text-[11px] font-medium text-gray-600 hover:text-indigo-600 transition-colors">user</a>
-                    <a href="#" class="text-[11px] font-medium text-gray-600 hover:text-indigo-600 transition-colors">club</a>
-                    <a href="#" class="text-[11px] font-medium text-gray-600 hover:text-indigo-600 transition-colors">Reclamation</a>
-                    <a href="#" class="text-[11px] font-medium text-gray-600 hover:text-indigo-600 transition-colors">Club_member</a>
-                    <a href="#" class="text-[11px] font-medium text-gray-600 hover:text-indigo-600 transition-colors">Evenement</a>
-                    <a href="#" class="text-[11px] font-medium text-gray-600 hover:text-indigo-600 transition-colors">Recrutement</a>
-                    <a href="#" class="text-[11px] font-medium text-gray-600 hover:text-indigo-600 transition-colors">condidature</a>
-                    <a href="#" class="text-[11px] font-medium text-gray-600 hover:text-indigo-600 transition-colors">participation</a>
-                    <a href="#" class="text-[11px] font-medium text-gray-600 hover:text-indigo-600 transition-colors">feedback</a>
                 </div>
 
                 <div class="flex items-center gap-4">
@@ -46,13 +33,10 @@
                         <a href="{{ path('app_logout') }}" class="text-sm font-medium text-red-600 hover:text-red-700 transition-colors">Déconnexion</a>
                     {% else %}
                         <a href="{{ path('app_login') }}">Connexion</a>
-                        <a href="{{ path('app_register') }}" 
-   class="text-sm font-medium bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm shadow-indigo-100">
-   S'inscrire
-</a>
+                        <a href="{{ path('app_register') }}" class="text-sm font-medium bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm shadow-indigo-100">S'inscrire</a>
                     {% endif %}
                 </div>
-                
+
             </div>
         </div>
     </nav>
